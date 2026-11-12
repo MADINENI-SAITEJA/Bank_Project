@@ -8,6 +8,8 @@ into 77 BANKING77 intents, suggests a support queue and records human reviews.
 Operations connects the tested ML pipeline, deployment status and monitoring.
 All money and support tickets are simulated. No requests go to a bank.
 
+- [Project report](Report.pdf) summarizes the system design, model results, and VM verification.
+- [AI disclosure](AI_Disclosure.md) describes how AI was used in the project.
 - [Design and API specification](DESIGN.md) contains the architecture, HLD and LLD.
 - [Ubuntu verification](VALIDATION.md#ubuntu-vm-verification) summarizes the
   deployment and test results, with raw reports in [evidence/vm/](evidence/vm/).
@@ -69,6 +71,17 @@ ticket, and restores the opening balances. Verification reports are saved in
 Grafana demo login is `admin` / `bankflow-local-demo`. Set `GRAFANA_PASSWORD`
 in a local `.env` before the first launch to choose a different password.
 
+## What to verify after setup
+
+| Where to look | Expected result |
+|---|---|
+| [Account overview and Support inbox](#user-manual) | Run the example transactions, classify a support request, and save a corrected label. Resize the browser to check the responsive layout. |
+| Operations | See the Test, Prepare, Train, and Evaluate stages, their statuses and timings, and the active model. **Data preparation** shows cleaned row counts, elapsed time, and throughput. The recorded Ubuntu run prepared 9,993 training and 3,080 test rows. |
+| MLflow | Open **BankFlow support routing** and expand **validation-selection** to see the two candidate runs. The parent run shows held-out metrics and artifacts. The recorded Ubuntu baseline reached 88.47% test accuracy and 0.8851 macro-F1. |
+| Prometheus and Grafana | After sending a few requests, check `probe_success` in Prometheus. All five service probes should return `1`. In Grafana, inspect request rate, latency, and service health. |
+| [Validation results](VALIDATION.md#ubuntu-vm-verification) | The recorded run passed 58 tests. The new run writes JUnit results to `runtime/test-results.xml` and the DVC graph, MLproject log, probe results, and live API acceptance results to `runtime/verification/`. |
+| [Full lifecycle demo](#full-lifecycle-demo) | Run the additional demo to observe drift-triggered retraining, gate rejection, rollback, and alert recovery. |
+
 ## Where to find things
 
 | Area | Files | Purpose |
@@ -78,10 +91,11 @@ in a local `.env` before the first launch to choose a different password.
 | `tests/` | 5 | Shared fixtures plus ledger, API, data and pipeline tests |
 | `monitoring/` | 7 | Prometheus, alerts, probe settings and Grafana provisioning/dashboard |
 | Data, build settings, documentation and archive evidence | 16 | Bundled dataset, Docker/DVC/MLproject configuration, guides and the original archive audit |
+| Submission documents | 2 | Project report and AI disclosure |
 | `evidence/vm/` | 19 | Ubuntu test results, pipeline and lifecycle logs, service probes, and resource measurements |
 
-The [file inventory](DESIGN.md#file-responsibilities) describes the 61 tracked
-files. Run commands from the project root. Host commands use `cli.py`, and
+See the [file inventory](DESIGN.md#file-responsibilities) for details on the code
+and configuration. Run commands from the project root. Host commands use `cli.py`, and
 `python -m pipeline` remains supported.
 
 ## User manual
@@ -172,8 +186,9 @@ docker compose run --rm --no-deps trainer python -m pipeline rollback
 A model run records Git SHA, exact source/configuration ZIP with SHA-256 hashes,
 installed package versions, parameters, raw dataset hashes and frozen feedback.
 To replay, use the recorded Git revision, overlay that run's `provenance/source.zip`
-if needed, and restore its `params.yaml` and `data/reviewed_feedback.json` artifact
-as `runtime/replay.json`. Then use the same Docker image/environment and run:
+if needed, restore the run's `params.yaml` to the repository root, and copy
+`data/reviewed_feedback.json` from the run artifacts to `runtime/replay.json`.
+Then use the same Docker image/environment and run:
 
 ```bash
 docker compose run --rm --no-deps trainer \

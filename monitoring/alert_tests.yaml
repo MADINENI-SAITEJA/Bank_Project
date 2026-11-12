@@ -27,7 +27,7 @@ tests:
       - series: 'bankflow_input_drift{job="bankflow",instance="backend:8000"}'
         values: '1x6'
       - series: 'bankflow_drift_ready{job="bankflow",instance="backend:8000"}'
-        values: '0 1x3 0x2'
+        values: '0 1 1 1 0 0 0'
     alert_rule_test:
       - eval_time: 30s
         alertname: BankFlowInputDrift

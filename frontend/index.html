@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>BankFlow · Banking simulator</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <aside>
+      <a class="brand" href="#account"><span class="logo">B</span>BankFlow</a>
+      <p class="eyebrow">YOUR WORKSPACE</p>
+      <nav>
+        <button data-view="account" class="selected">Overview</button
+        ><button data-view="support">Support inbox</button
+        ><button data-view="operations">Operations</button>
+      </nav>
+      <div class="aside-bottom">
+        <span class="pill">Demo account</span>
+        <p>Simulated money.<br />No connection to a bank.</p>
+      </div>
+    </aside>
+    <main>
+      <header>
+        <div>
+          <p class="eyebrow">BANKING WORKSPACE</p>
+          <h1 id="page-title">Account overview</h1>
+        </div>
+        <div class="identity">
+          <span class="avatar">D</span>
+          <div>Demo customer<small>Local simulator · INR</small></div>
+        </div>
+      </header>
+      <div id="notice" role="status" aria-live="polite" hidden></div>
+      <section id="account-view">
+        <div class="summary">
+          <article class="balance-card">
+            <p>Savings balance</p>
+            <h2 id="balance">—</h2>
+            <div class="card-bottom">
+              <span>DEMO SAVINGS</span><span>•••• 0001</span>
+            </div>
+          </article>
+          <article class="panel">
+            <p class="eyebrow">CREDIT CARD</p>
+            <h2 id="card-due">—</h2>
+            <p>Outstanding balance</p>
+            <div class="meter"><div id="card-meter"></div></div>
+            <small id="card-available">—</small>
+          </article>
+          <article class="panel">
+            <p class="eyebrow">ACCOUNT ACTIVITY</p>
+            <h2 id="transaction-count">—</h2>
+            <p>Recent ledger entries</p>
+            <small>Original entries remain visible after reversal.</small>
+          </article>
+        </div>
+        <div class="work-grid">
+          <article class="panel">
+            <div class="panel-heading">
+              <h3>Move money</h3>
+              <span class="pill">Simulator</span>
+            </div>
+            <form id="transaction-form">
+              <label for="kind">Operation</label
+              ><select id="kind">
+                <option value="deposit">Deposit to savings</option>
+                <option value="withdrawal">Withdraw from savings</option>
+                <option value="card_purchase">Credit-card purchase</option>
+                <option value="card_repayment">
+                  Pay card from savings
+                </option></select
+              ><label for="amount">Amount (₹)</label
+              ><input
+                id="amount"
+                inputmode="decimal"
+                placeholder="500.00"
+                required
+                pattern="[0-9]+(\.[0-9]{1,2})?"
+              /><label for="memo"
+                >Description <span class="muted">optional</span></label
+              ><input
+                id="memo"
+                maxlength="200"
+                placeholder="e.g. Monthly deposit"
+              /><button class="primary" type="submit" id="transaction-submit">
+                Confirm transaction
+              </button>
+              <p class="help">
+                Card repayments use your savings balance. Overdrafts and card
+                overpayments are rejected.
+              </p>
+            </form>
+          </article>
+          <article class="panel ledger-panel">
+            <div class="panel-heading">
+              <div>
+                <h3>Transaction history</h3>
+                <p class="muted">Latest 100 entries</p>
+              </div>
+              <button class="secondary" id="refresh-account">Refresh</button>
+            </div>
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Entry</th>
+                    <th>Amount</th>
+                    <th>Time</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="ledger-body"></tbody>
+              </table>
+            </div>
+          </article>
+        </div>
+      </section>
+      <section id="support-view" hidden>
+        <div class="work-grid">
+          <article class="panel">
+            <p class="eyebrow">AI SUPPORT ROUTING</p>
+            <h3>What can we help with?</h3>
+            <p class="muted">
+              Describe a banking issue in English. The model suggests a category
+              and support queue.
+            </p>
+            <form id="support-form">
+              <label for="query">Your request</label
+              ><textarea
+                id="query"
+                minlength="3"
+                maxlength="1000"
+                rows="5"
+                placeholder="My card payment was declined."
+                required
+              ></textarea
+              ><button class="primary" type="submit">Classify request</button>
+            </form>
+            <div id="prediction" hidden></div>
+            <p class="help">
+              Scores are model probabilities, not calibrated certainty.
+              Uncertain requests are marked for review. No ticket is sent to an
+              external bank.
+            </p>
+          </article>
+          <article class="panel">
+            <div class="panel-heading">
+              <h3>Support inbox</h3>
+              <button class="secondary" id="refresh-tickets">Refresh</button>
+            </div>
+            <div id="tickets"></div>
+          </article>
+        </div>
+      </section>
+      <section id="operations-view" hidden>
+        <div class="panel-heading">
+          <p class="muted">Training and evaluation history</p>
+          <button class="primary" id="run-pipeline">Run pipeline</button>
+        </div>
+        <div class="stages">
+          <article class="panel">
+            <span class="stage-number">01</span>
+            <h3>Test</h3>
+            <p>Check ledger, API and pipeline behavior before training.</p>
+          </article>
+          <article class="panel">
+            <span class="stage-number">02</span>
+            <h3>Prepare</h3>
+            <p>Validate queries, remove overlap, export Parquet.</p>
+          </article>
+          <article class="panel">
+            <span class="stage-number">03</span>
+            <h3>Train</h3>
+            <p>Compare models on validation data and log experiments.</p>
+          </article>
+          <article class="panel">
+            <span class="stage-number">04</span>
+            <h3>Evaluate</h3>
+            <p>Evaluate held-out queries and apply the quality gate.</p>
+          </article>
+        </div>
+        <div class="work-grid">
+          <article class="panel">
+            <h3>Latest evaluation</h3>
+            <div id="evaluation"></div>
+            <div class="tool-links">
+              <a id="mlflow-link" target="_blank" rel="noopener">Open MLflow</a
+              ><a id="grafana-link" target="_blank" rel="noopener"
+                >Open Grafana</a
+              >
+            </div>
+            <p class="help">
+              The model service loads quality-approved versions automatically.
+              Loading and fallback status appear below.
+            </p>
+          </article>
+          <article class="panel">
+            <h3>Pipeline runs</h3>
+            <div id="pipeline-runs"></div>
+          </article>
+        </div>
+        <div class="stages">
+          <article class="panel">
+            <h3>Live model</h3>
+            <div id="deployment-state"></div>
+          </article>
+          <article class="panel">
+            <h3>Data preparation</h3>
+            <div id="data-preparation"></div>
+          </article>
+          <article class="panel">
+            <h3>Input monitoring</h3>
+            <div id="input-monitoring"></div>
+            <p class="help">
+              Agreement uses reviewed tickets scored by the active model.
+            </p>
+          </article>
+        </div>
+      </section>
+      <footer>
+        BankFlow · Local banking simulator
+        <span id="connection">Connecting…</span>
+      </footer>
+    </main>
+    <script src="app.js"></script>
+</body>
+</html>

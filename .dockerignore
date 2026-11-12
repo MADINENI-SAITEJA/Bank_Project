@@ -1,0 +1,13 @@
+.git
+.dvc/cache
+.dvc/tmp
+.venv
+runtime
+mlartifacts
+artifacts
+data/prepared
+**/__pycache__
+**/*.pyc
+.pytest_cache
+BankFlow*.zip
+.env

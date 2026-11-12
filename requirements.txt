@@ -1,0 +1,17 @@
+fastapi==0.115.12
+uvicorn==0.34.2
+httpx==0.28.1
+prometheus-client==0.21.1
+mlflow==2.22.0
+SQLAlchemy==1.4.54
+alembic==1.14.1
+ray[data]==2.43.0
+dvc==3.59.1
+pathspec==0.12.1
+scikit-learn==1.5.2
+pandas==2.2.3
+numpy==1.26.4
+joblib==1.4.2
+pyarrow==19.0.1
+PyYAML==6.0.2
+pytest==8.3.5

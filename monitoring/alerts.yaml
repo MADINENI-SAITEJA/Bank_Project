@@ -1,0 +1,33 @@
+groups:
+  - name: bankflow
+    rules:
+      - alert: BankFlowServiceUnavailable
+        expr: probe_success == 0
+        for: 2m
+        labels: {severity: warning}
+        annotations:
+          summary: 'BankFlow service is unavailable'
+      - alert: BankFlowScrapeUnavailable
+        expr: up == 0
+        for: 1m
+        labels: {severity: warning}
+        annotations:
+          summary: 'Prometheus cannot scrape a configured target'
+      - alert: BankFlowAPIErrors
+        expr: sum(rate(bankflow_http_requests_total{status=~"5.."}[5m])) > 0.05
+        for: 2m
+        labels: {severity: warning}
+        annotations:
+          summary: 'BankFlow API errors increased'
+      - alert: BankFlowInputDrift
+        expr: bankflow_input_drift == 1 and bankflow_drift_ready == 1
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: 'Recent support queries differ from the training reference'
+      - alert: BankFlowMonitorStale
+        expr: time() - bankflow_monitor_updated_timestamp_seconds > 60
+        for: 30s
+        labels: {severity: warning}
+        annotations:
+          summary: 'Input monitoring has not refreshed'

@@ -1,0 +1,5 @@
+name: BankFlow
+entry_points:
+  main:
+    command: "python -m pipeline run"
+# The Compose trainer image supplies the same pinned dependencies used for serving.

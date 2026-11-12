@@ -1,0 +1,79 @@
+stages:
+  test:
+    cmd: python -m pytest tests -q --junitxml=runtime/test-results.xml
+    deps:
+    - app.py
+    - cli.py
+    - data_pipeline.py
+    - ledger.py
+    - model.py
+    - pipeline.py
+    - routing.py
+    - schemas.py
+    - training.py
+    - verify.py
+    - requirements.txt
+    - data/banking77.zip
+    - tests/conftest.py
+    - tests/test_api.py
+    - tests/test_ledger.py
+    - tests/test_pipeline.py
+    - tests/test_training.py
+    outs:
+    - runtime/test-results.xml:
+        cache: false
+  prepare:
+    cmd: python -m data_pipeline
+    deps:
+    - data_pipeline.py
+    - data/banking77.zip
+    params:
+    - prepare
+    outs:
+    - data/prepared/train.parquet
+    - data/prepared/test.parquet
+    - data/prepared/prep_metrics.json
+    - data/prepared/profile.json
+  train:
+    cmd: python -m training train
+    deps:
+    - training.py
+    - model.py
+    - data/prepared/train.parquet
+    - data/prepared/prep_metrics.json
+    - data/prepared/profile.json
+    - runtime/reviewed_feedback.json
+    - requirements.txt
+    - runtime/test-results.xml
+    - data_pipeline.py
+    - routing.py
+    params:
+    - train
+    outs:
+    - artifacts/model.joblib
+    - artifacts/feature_weights.csv:
+        cache: false
+    - artifacts/training.json:
+        cache: false
+    - artifacts/candidate_uri.txt:
+        cache: false
+  evaluate:
+    cmd: python -m training evaluate
+    deps:
+    - training.py
+    - artifacts/model.joblib
+    - artifacts/training.json
+    - artifacts/candidate_uri.txt
+    - data/prepared/test.parquet
+    - data_pipeline.py
+    - routing.py
+    params:
+    - evaluate
+    metrics:
+    - artifacts/metrics.json:
+        cache: false
+    outs:
+    - artifacts/confusion_matrix.csv:
+        cache: false
+    - artifacts/approved_uri.txt:
+        cache: false

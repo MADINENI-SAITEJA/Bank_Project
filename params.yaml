@@ -1,0 +1,21 @@
+prepare:
+  cpus: 2
+train:
+  seed: 42
+  max_features: 10000
+  validation_fraction: 0.2
+  nb_alpha: 0.5
+  logistic_C: 4.0
+  max_iter: 200
+  review_threshold: 0.45
+evaluate:
+  minimum_macro_f1: 0.65
+monitor:
+  window: 200
+  minimum_samples: 50
+  length_jsd_threshold: 0.12
+  unknown_delta_threshold: 0.15
+  automatic_retraining: true
+  minimum_reviewed: 5
+  scheduled_interval_seconds: 86400
+  cooldown_seconds: 3600

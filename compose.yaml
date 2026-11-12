@@ -1,0 +1,143 @@
+name: bankflow-submission
+x-python: &python
+  image: bankflow-python:submission
+  build:
+    context: .
+    target: backend
+  working_dir: /project
+  volumes:
+    - .:/project
+  environment: &env
+    PROJECT_ROOT: /project
+    MLFLOW_TRACKING_URI: sqlite:////project/runtime/mlflow.db
+    OPENBLAS_NUM_THREADS: '1'
+    OMP_NUM_THREADS: '1'
+    MKL_NUM_THREADS: '1'
+    DVC_NO_ANALYTICS: '1'
+    RAY_USAGE_STATS_ENABLED: '0'
+  logging:
+    driver: json-file
+    options:
+      max-size: 5m
+      max-file: '2'
+services:
+  backend:
+    <<: *python
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --workers 1
+    environment:
+      <<: *env
+      MODEL_URL: http://model:5001
+      FRONTEND_ORIGINS: http://localhost:8080,http://127.0.0.1:8080
+      ALLOW_PIPELINE_RUN: '1'
+    ports: ['127.0.0.1:8000:8000']
+    cpus: 2.0
+    mem_limit: 3g
+    shm_size: 128m
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:8000/health]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+  frontend:
+    build:
+      context: .
+      target: frontend
+    configs:
+      - source: frontend_nginx
+        target: /etc/nginx/conf.d/default.conf
+    ports: ['127.0.0.1:8080:80']
+    cpus: 0.25
+    mem_limit: 96m
+    logging:
+      options: {max-size: 5m, max-file: '2'}
+  trainer:
+    <<: *python
+    profiles: [training]
+    command: python -m pipeline run
+    cpus: 2.0
+    mem_limit: 3g
+    shm_size: 128m
+  model:
+    <<: *python
+    profiles: [ai]
+    command: python -m model
+    cpus: 0.75
+    mem_limit: 768m
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:5001/ping]
+      interval: 20s
+      timeout: 5s
+      retries: 3
+  mlflow:
+    <<: *python
+    command: mlflow server --backend-store-uri sqlite:////project/runtime/mlflow.db --default-artifact-root /project/mlartifacts --no-serve-artifacts --host 0.0.0.0 --port 5000 --workers 1
+    ports: ['127.0.0.1:5000:5000']
+    cpus: 0.5
+    mem_limit: 640m
+  prometheus:
+    image: prom/prometheus:v3.2.1
+    profiles: [monitoring]
+    command: ['--config.file=/etc/prometheus/prometheus.yml','--storage.tsdb.retention.time=2d','--storage.tsdb.retention.size=150MB']
+    volumes:
+      - prometheus-data:/prometheus
+    configs:
+      - source: prometheus_config
+        target: /etc/prometheus/prometheus.yml
+      - source: alert_rules
+        target: /etc/prometheus/alerts.yml
+      - source: alert_tests
+        target: /etc/prometheus/alerts.test.yml
+    ports: ['127.0.0.1:9090:9090']
+    cpus: 0.25
+    mem_limit: 256m
+  grafana:
+    image: grafana/grafana:11.6.0
+    profiles: [monitoring]
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:-bankflow-local-demo}
+      GF_USERS_ALLOW_SIGN_UP: 'false'
+      GF_ANALYTICS_REPORTING_ENABLED: 'false'
+      GF_ANALYTICS_CHECK_FOR_UPDATES: 'false'
+    volumes:
+      - grafana-data:/var/lib/grafana
+    configs:
+      - source: grafana_prometheus
+        target: /etc/grafana/provisioning/datasources/prometheus.yml
+      - source: grafana_dashboard_provider
+        target: /etc/grafana/provisioning/dashboards/bankflow.yml
+      - source: grafana_dashboard
+        target: /var/lib/grafana/dashboards/bankflow.json
+    ports: ['127.0.0.1:3000:3000']
+    cpus: 0.25
+    mem_limit: 256m
+  probe:
+    image: prom/blackbox-exporter:v0.26.0
+    profiles: [monitoring]
+    command: ['--config.file=/etc/blackbox_exporter/config.yml']
+    configs:
+      - source: blackbox_config
+        target: /etc/blackbox_exporter/config.yml
+    cpus: 0.1
+    mem_limit: 64m
+volumes:
+  prometheus-data:
+  grafana-data:
+
+configs:
+  frontend_nginx:
+    file: ./frontend/nginx.conf
+  prometheus_config:
+    file: ./monitoring/prometheus.yaml
+  alert_rules:
+    file: ./monitoring/alerts.yaml
+  alert_tests:
+    file: ./monitoring/alert_tests.yaml
+  blackbox_config:
+    file: ./monitoring/blackbox.yaml
+  grafana_prometheus:
+    file: ./monitoring/grafana_datasource.yaml
+  grafana_dashboard_provider:
+    file: ./monitoring/grafana_provider.yaml
+  grafana_dashboard:
+    file: ./monitoring/grafana_dashboard.json

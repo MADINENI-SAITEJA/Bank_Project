@@ -1,0 +1,43 @@
+rule_files:
+  - /etc/prometheus/alerts.yml
+evaluation_interval: 15s
+tests:
+  - interval: 15s
+    input_series:
+      - series: 'probe_success{job="service-health",instance="http://model:5001/ping"}'
+        values: '1 0x9 1x4'
+    alert_rule_test:
+      - eval_time: 1m
+        alertname: BankFlowServiceUnavailable
+        exp_alerts: []
+      - eval_time: 2m30s
+        alertname: BankFlowServiceUnavailable
+        exp_alerts:
+          - exp_labels:
+              job: service-health
+              instance: http://model:5001/ping
+              severity: warning
+            exp_annotations:
+              summary: BankFlow service is unavailable
+      - eval_time: 3m
+        alertname: BankFlowServiceUnavailable
+        exp_alerts: []
+  - interval: 15s
+    input_series:
+      - series: 'bankflow_input_drift{job="bankflow",instance="backend:8000"}'
+        values: '1x6'
+      - series: 'bankflow_drift_ready{job="bankflow",instance="backend:8000"}'
+        values: '0 1x3 0x2'
+    alert_rule_test:
+      - eval_time: 30s
+        alertname: BankFlowInputDrift
+        exp_alerts: []
+      - eval_time: 45s
+        alertname: BankFlowInputDrift
+        exp_alerts:
+          - exp_labels: {job: bankflow, instance: 'backend:8000', severity: warning}
+            exp_annotations:
+              summary: Recent support queries differ from the training reference
+      - eval_time: 1m
+        alertname: BankFlowInputDrift
+        exp_alerts: []

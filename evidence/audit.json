@@ -1,0 +1,276 @@
+{
+  "generated_at_utc": "2026-11-12T06:19:17.724830+00:00",
+  "release": "BankFlow_Clear_Structure.zip",
+  "rubric": {
+    "development_guidelines": {
+      "title": "AI Application Development Guidelines.pdf",
+      "sha256": "9a1a9f1f5fd506061020a9e7b99abb6664ffbdb75552047a62705624580e7850"
+    },
+    "evaluation_guideline": {
+      "title": "AI Application Evaluation Guideline (1) (1).pdf",
+      "sha256": "56ad7cd71292efa2e50f34c9051a6f05027bdf339bda717627780b4a833b3aad"
+    },
+    "total_points": 25,
+    "mandatory_document_topics": [
+      "architecture and block explanation",
+      "high-level design and rationale",
+      "low-level design and API I/O",
+      "test plan and cases",
+      "nontechnical user manual"
+    ],
+    "separate_additional_rubric_available": false
+  },
+  "packaged_files": [
+    "app.py",
+    "ledger.py",
+    "schemas.py",
+    "routing.py",
+    "data_pipeline.py",
+    "training.py",
+    "pipeline.py",
+    "model.py",
+    "cli.py",
+    "verify.py",
+    "frontend/index.html",
+    "frontend/styles.css",
+    "frontend/app.js",
+    "frontend/nginx.conf",
+    "tests/conftest.py",
+    "tests/test_ledger.py",
+    "tests/test_api.py",
+    "tests/test_training.py",
+    "tests/test_pipeline.py",
+    "monitoring/prometheus.yaml",
+    "monitoring/alerts.yaml",
+    "monitoring/alert_tests.yaml",
+    "monitoring/blackbox.yaml",
+    "monitoring/grafana_datasource.yaml",
+    "monitoring/grafana_provider.yaml",
+    "monitoring/grafana_dashboard.json",
+    "Dockerfile",
+    "requirements.txt",
+    "compose.yaml",
+    "params.yaml",
+    "dvc.yaml",
+    "MLproject",
+    "data/banking77.zip",
+    "README.md",
+    "DESIGN.md",
+    "VALIDATION.md",
+    "evidence/test-results.xml",
+    "evidence/audit.json",
+    ".gitignore",
+    ".dockerignore"
+  ],
+  "release_sha256": {
+    "app.py": "4b337aa00806f8b2aeb65af7cab32c65ebd449438bbeb5af8cbd02f567f34834",
+    "ledger.py": "e7f3d81bddab351fac26188319bec718c6e44ca94a3336d258f0a092055d66fe",
+    "schemas.py": "f4818d66cd5c318b97afbe9c9c4649eeba91126921b0f72dfdd877f5e696dc8f",
+    "routing.py": "5ce506da7d6c2d1a290770149a5a380c62558b15e0a5a127717b1f5dfc1f01f2",
+    "data_pipeline.py": "21f0f9445d2c2a36c270cb0bcb199512e76afc44a656abbcdcad6a95f7d6e2da",
+    "training.py": "44a0b58b376532b3afcaeffcfe464f8b4bc8b2f0cc66e9c0c3f13e88ac8975e4",
+    "pipeline.py": "b7606599cc6c3ef6b89528e54316cebe59d9ea85f05291886f93617369a2b243",
+    "model.py": "5dc9338d65574a3c60e31fb38a6c3e51aef5eb6934baf33862ba8211b18288c2",
+    "cli.py": "641b5152ce8cd2d07022db2ec4f171b0d07d4e53b52603fb7036d81bfd0c5c4e",
+    "verify.py": "6ee7d0a3a5c4336c3cc2f1442d41b5aa826e7672d93168444d6e3ab618200758",
+    "frontend/index.html": "3b75678c39ff6a545af017f6c1d2b9da32df10d2c67a11f8036bd4b9d085389c",
+    "frontend/styles.css": "5aec795b725194b14ed0614a49b39e97120b6596fa241d2c561d9297c5142b0e",
+    "frontend/app.js": "e2b43d555f8c228aa46ed428bbb542305c4432ae993e9148f156cab95ac58fa3",
+    "frontend/nginx.conf": "a5efc8a2bd98ad26c78a82e0c0c543d169ae59bfc45d4a4e0483bbb3d7a772c1",
+    "tests/conftest.py": "6e1964204deefca303d4b2e403c0e6a5f23fc17da542508aed059a8da0bbe40e",
+    "tests/test_ledger.py": "4902799e820f657e7cd3c6479ee046027ad4f12152b440696488afca71b9e223",
+    "tests/test_api.py": "5b6b06bfc0c5b231f5340a92982e95cce10bcf5d7bf1f0bdbce765324850a36a",
+    "tests/test_training.py": "a2d32f643aa6f6da6fcdbe61175f7e54392226677554a140cc7da874238ecf7e",
+    "tests/test_pipeline.py": "8a7bd13678a71677d8bfc6c413419790371aac7dd7f51dc1746b8da170ebb19d",
+    "monitoring/prometheus.yaml": "09f0b2a6bbfb7a52cc8adafb8b7cf589b01ae791d4e00d1bc8ee80d55562a8b9",
+    "monitoring/alerts.yaml": "3fe46643d3b0b07c8fb7c9ba80e3f2334936b75c01b2a45ad3d2e386e72b3c13",
+    "monitoring/alert_tests.yaml": "2118e7cce90342f3372873ce6c0456d7b26f633b5eb7987456a5e9622e7647c0",
+    "monitoring/blackbox.yaml": "216614e0e9740ce78bc18f95ef882629f32f0fc5e00a358b56bdf889d03375fd",
+    "monitoring/grafana_datasource.yaml": "19d98cca02290926efd3e8b622d97213f3c19ed9b561898225d8e149ff48d9d6",
+    "monitoring/grafana_provider.yaml": "01f963ea690f5cea985157ea61f927693d4ac93b70e26ca7c286a9647afeb733",
+    "monitoring/grafana_dashboard.json": "8224437c4266264dd089f2014c78970d4c3c6e594474f705eeb6105fbeb14630",
+    "Dockerfile": "35fbfcc301a60adf674f2565c7749ae1a6affd94622ed1cc9afd3af9984f67be",
+    "requirements.txt": "dcfac33e7aa969d81b86ccc9ae9eda2dbb316f887a32998e8efe8b289a65b334",
+    "compose.yaml": "83126ba766576e55c31cc8242d6df7435901811041a34b4e55c78a19e2418bfe",
+    "params.yaml": "6a1f7d533fe13b5e41728db190ca71fa4e5dff5c964419be8c2727b1a99061bd",
+    "dvc.yaml": "89a75ebaecae613df97efb88f463dc0e529717968f5a86adfe6ef23eb86d0d05",
+    "MLproject": "d93907578524f5e93cd48d03f8bf50c1837d795d458273511493a7664d215ca6",
+    "data/banking77.zip": "1abaf5ad4ccf5ec0d5946c412d80262a04c950679ceb79477fd4a01fe52abfdf",
+    "README.md": "63b268192440027629a2dfc04a4c7e4625bc1ef747286ae64960bc4ba0d559bf",
+    "DESIGN.md": "8b53db9ca06a1f433b8e283c34e8822ce84901287af602ab201ac753dfa7a5ac",
+    "VALIDATION.md": "8a54b42fd07d5eef4008f93528b732bb07e6780feffe1f82b822dbf87c017dc3",
+    "evidence/test-results.xml": "f81d70acf644956bd40096e2d7dacf70a928a24b5a4e2ac48e956efe77dff8cb",
+    ".gitignore": "11fcf76ad7b77986a89ba2bbf04d45bf1dff57a7332b9f4a6b123f78926ff5fe",
+    ".dockerignore": "e11d637eb178b4f953c7c7b2e057ae52ed907f84f554d1dffb3a7428667b122c"
+  },
+  "manifest_note": "The audit file itself is omitted to avoid a self-referential hash.",
+  "unit_tests": {
+    "tests": 58,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "report": "evidence/test-results.xml",
+    "python": "3.12.14",
+    "command": "python -m pytest tests -q --junitxml=evidence/test-results.xml"
+  },
+  "formatting": {
+    "python_files": 15,
+    "black_check": "passed",
+    "javascript_syntax_check": "passed"
+  },
+  "static_checks": {
+    "preserved_function_or_class_definitions": 109,
+    "dataset_checksums": "passed",
+    "compose_service_equivalence": "passed",
+    "external_config_equivalence": "passed",
+    "frontend_extraction_equivalence": "passed",
+    "dvc_paths_and_document_links": "passed"
+  },
+  "dataset": {
+    "unchanged_from_submission_zip": true,
+    "classes": 77,
+    "raw": {
+      "train.csv": {
+        "sha256": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b",
+        "rows": 10003
+      },
+      "test.csv": {
+        "sha256": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d",
+        "rows": 3080
+      }
+    },
+    "clean_train_rows": 9993,
+    "test_rows": 3080
+  },
+  "native_integration": {
+    "scope": "Native Python/MLflow/DVC/API and DOM checks, not the Docker/Ray/Prometheus/Grafana deployment.",
+    "preparation_adjustment": "Only data_pipeline.prepare() was substituted with equivalent pandas ingestion in a disposable QA checkout because this workspace does not permit Ray Unix sockets. The released prepare function uses real Ray, unchanged from the checked release.",
+    "source_comparison": {
+      "app.py": {
+        "release_sha256": "4b337aa00806f8b2aeb65af7cab32c65ebd449438bbeb5af8cbd02f567f34834",
+        "native_qa_sha256": "4b337aa00806f8b2aeb65af7cab32c65ebd449438bbeb5af8cbd02f567f34834"
+      },
+      "ledger.py": {
+        "release_sha256": "e7f3d81bddab351fac26188319bec718c6e44ca94a3336d258f0a092055d66fe",
+        "native_qa_sha256": "e7f3d81bddab351fac26188319bec718c6e44ca94a3336d258f0a092055d66fe"
+      },
+      "schemas.py": {
+        "release_sha256": "f4818d66cd5c318b97afbe9c9c4649eeba91126921b0f72dfdd877f5e696dc8f",
+        "native_qa_sha256": "f4818d66cd5c318b97afbe9c9c4649eeba91126921b0f72dfdd877f5e696dc8f"
+      },
+      "routing.py": {
+        "release_sha256": "5ce506da7d6c2d1a290770149a5a380c62558b15e0a5a127717b1f5dfc1f01f2",
+        "native_qa_sha256": "5ce506da7d6c2d1a290770149a5a380c62558b15e0a5a127717b1f5dfc1f01f2"
+      },
+      "data_pipeline.py": {
+        "release_sha256": "21f0f9445d2c2a36c270cb0bcb199512e76afc44a656abbcdcad6a95f7d6e2da",
+        "native_qa_sha256": "69b9a005d6b0654c889eb96c7de567648342aacae4599af934dba9078bd98a03"
+      },
+      "training.py": {
+        "release_sha256": "44a0b58b376532b3afcaeffcfe464f8b4bc8b2f0cc66e9c0c3f13e88ac8975e4",
+        "native_qa_sha256": "44a0b58b376532b3afcaeffcfe464f8b4bc8b2f0cc66e9c0c3f13e88ac8975e4"
+      },
+      "pipeline.py": {
+        "release_sha256": "b7606599cc6c3ef6b89528e54316cebe59d9ea85f05291886f93617369a2b243",
+        "native_qa_sha256": "b7606599cc6c3ef6b89528e54316cebe59d9ea85f05291886f93617369a2b243"
+      },
+      "model.py": {
+        "release_sha256": "5dc9338d65574a3c60e31fb38a6c3e51aef5eb6934baf33862ba8211b18288c2",
+        "native_qa_sha256": "5dc9338d65574a3c60e31fb38a6c3e51aef5eb6934baf33862ba8211b18288c2"
+      },
+      "cli.py": {
+        "release_sha256": "641b5152ce8cd2d07022db2ec4f171b0d07d4e53b52603fb7036d81bfd0c5c4e",
+        "native_qa_sha256": "641b5152ce8cd2d07022db2ec4f171b0d07d4e53b52603fb7036d81bfd0c5c4e"
+      },
+      "verify.py": {
+        "release_sha256": "6ee7d0a3a5c4336c3cc2f1442d41b5aa826e7672d93168444d6e3ab618200758",
+        "native_qa_sha256": "6ee7d0a3a5c4336c3cc2f1442d41b5aa826e7672d93168444d6e3ab618200758"
+      },
+      "tests/conftest.py": {
+        "release_sha256": "6e1964204deefca303d4b2e403c0e6a5f23fc17da542508aed059a8da0bbe40e",
+        "native_qa_sha256": "6e1964204deefca303d4b2e403c0e6a5f23fc17da542508aed059a8da0bbe40e"
+      },
+      "tests/test_ledger.py": {
+        "release_sha256": "4902799e820f657e7cd3c6479ee046027ad4f12152b440696488afca71b9e223",
+        "native_qa_sha256": "4902799e820f657e7cd3c6479ee046027ad4f12152b440696488afca71b9e223"
+      },
+      "tests/test_api.py": {
+        "release_sha256": "5b6b06bfc0c5b231f5340a92982e95cce10bcf5d7bf1f0bdbce765324850a36a",
+        "native_qa_sha256": "5b6b06bfc0c5b231f5340a92982e95cce10bcf5d7bf1f0bdbce765324850a36a"
+      },
+      "tests/test_training.py": {
+        "release_sha256": "a2d32f643aa6f6da6fcdbe61175f7e54392226677554a140cc7da874238ecf7e",
+        "native_qa_sha256": "a2d32f643aa6f6da6fcdbe61175f7e54392226677554a140cc7da874238ecf7e"
+      },
+      "tests/test_pipeline.py": {
+        "release_sha256": "8a7bd13678a71677d8bfc6c413419790371aac7dd7f51dc1746b8da170ebb19d",
+        "native_qa_sha256": "8a7bd13678a71677d8bfc6c413419790371aac7dd7f51dc1746b8da170ebb19d"
+      }
+    },
+    "baseline": {
+      "run_id": "1a72859b5d2648db8fa769aae6027ea1",
+      "metrics": {
+        "evaluate_seconds": 0.15455092199999854,
+        "test_accuracy": 0.8847402597402597,
+        "test_macro_f1": 0.885093272747434,
+        "test_rows": 3080
+      }
+    },
+    "reviewed_feedback": {
+      "metrics": {
+        "evaluate_seconds": 0.1628162239999824,
+        "test_accuracy": 0.8860389610389611,
+        "test_macro_f1": 0.8863992566528391,
+        "test_rows": 3080
+      },
+      "training": {
+        "run_id": "86b106955c5e4a26b190335937d38705",
+        "git_commit": "a6e77230cf7bbfcc7c7e5f244a7551fd0d5d6985",
+        "selected_model": "logistic",
+        "validation": [
+          {
+            "model": "naive_bayes",
+            "accuracy": 0.8119059529764883,
+            "macro_f1": 0.7865238477408927,
+            "train_seconds": 0.07908314799999516
+          },
+          {
+            "model": "logistic",
+            "accuracy": 0.870935467733867,
+            "macro_f1": 0.8707047104007051,
+            "train_seconds": 1.46097725300001
+          }
+        ],
+        "train_rows": 9999,
+        "features": 10000,
+        "reviewed_training_rows": 6
+      }
+    },
+    "checks": [
+      "MLproject tested DVC graph",
+      "live banking/retries/reversals/inference/review",
+      "frontend own JavaScript executed against live APIs",
+      "UI pipeline launch/cache display",
+      "input drift and automatic reviewed retraining",
+      "new model run actually served",
+      "quality-gate rejection",
+      "rollback and cached-approval protection",
+      "unloadable candidate fallback",
+      "final explicit test-file DVC dependencies and subsequent cache reuse"
+    ],
+    "mlproject_log": "2026/11/12 11:44:45 INFO mlflow.store.db.utils: Creating initial MLflow database tables...\n2026/11/12 11:44:45 INFO mlflow.store.db.utils: Updating database tables\nINFO  [alembic.runtime.migration] Context impl SQLiteImpl.\nINFO  [alembic.runtime.migration] Will assume non-transactional DDL.\nINFO  [alembic.runtime.migration] Running upgrade  -> 451aebb31d03, add metric step\nINFO  [alembic.runtime.migration] Running upgrade 451aebb31d03 -> 90e64c465722, migrate user column to tags\nINFO  [alembic.runtime.migration] Running upgrade 90e64c465722 -> 181f10493468, allow nulls for metric values\nINFO  [alembic.runtime.migration] Running upgrade 181f10493468 -> df50e92ffc5e, Add Experiment Tags Table\nINFO  [alembic.runtime.migration] Running upgrade df50e92ffc5e -> 7ac759974ad8, Update run tags with larger limit\nINFO  [alembic.runtime.migration] Running upgrade 7ac759974ad8 -> 89d4b8295536, create latest metrics table\nINFO  [89d4b8295536_create_latest_metrics_table_py] Migration complete!\nINFO  [alembic.runtime.migration] Running upgrade 89d4b8295536 -> 2b4d017a5e9b, add model registry tables to db\nINFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Adding registered_models and model_versions tables to database.\nINFO  [2b4d017a5e9b_add_model_registry_tables_to_db_py] Migration complete!\nINFO  [alembic.runtime.migration] Running upgrade 2b4d017a5e9b -> cfd24bdc0731, Update run status constraint with killed\nINFO  [alembic.runtime.migration] Running upgrade cfd24bdc0731 -> 0a8213491aaa, drop_duplicate_killed_constraint\nINFO  [alembic.runtime.migration] Running upgrade 0a8213491aaa -> 728d730b5ebd, add registered model tags table\nINFO  [alembic.runtime.migration] Running upgrade 728d730b5ebd -> 27a6a02d2cf1, add model version tags table\nINFO  [alembic.runtime.migration] Running upgrade 27a6a02d2cf1 -> 84291f40a231, add run_link to model_version\nINFO  [alembic.runtime.migration] Running upgrade 84291f40a231 -> a8c4a736bde6, allow nulls for run_id\nINFO  [alembic.runtime.migration] Running upgrade a8c4a736bde6 -> 39d1c3be5f05, add_is_nan_constraint_for_metrics_tables_if_necessary\nINFO  [alembic.runtime.migration] Running upgrade 39d1c3be5f05 -> c48cb773bb87, reset_default_value_for_is_nan_in_metrics_table_for_mysql\nINFO  [alembic.runtime.migration] Running upgrade c48cb773bb87 -> bd07f7e963c5, create index on run_uuid\nINFO  [alembic.runtime.migration] Running upgrade bd07f7e963c5 -> 0c779009ac13, add deleted_time field to runs table\nINFO  [alembic.runtime.migration] Running upgrade 0c779009ac13 -> cc1f77228345, change param value length to 500\nINFO  [alembic.runtime.migration] Running upgrade cc1f77228345 -> 97727af70f4d, Add creation_time and last_update_time to experiments table\nINFO  [alembic.runtime.migration] Running upgrade 97727af70f4d -> 3500859a5d39, Add Model Aliases table\nINFO  [alembic.runtime.migration] Running upgrade 3500859a5d39 -> 7f2a7d5fae7d, add datasets inputs input_tags tables\nINFO  [alembic.runtime.migration] Running upgrade 7f2a7d5fae7d -> 2d6e25af4d3e, increase max param val length from 500 to 8000\nINFO  [alembic.runtime.migration] Running upgrade 2d6e25af4d3e -> acf3f17fdcc7, add storage location field to model versions\nINFO  [alembic.runtime.migration] Running upgrade acf3f17fdcc7 -> 867495a8f9d4, add trace tables\nINFO  [alembic.runtime.migration] Running upgrade 867495a8f9d4 -> 5b0e9adcef9c, add cascade deletion to trace tables foreign keys\nINFO  [alembic.runtime.migration] Running upgrade 5b0e9adcef9c -> 4465047574b1, increase max dataset schema size\nINFO  [alembic.runtime.migration] Running upgrade 4465047574b1 -> f5a4f2784254, increase run tag value limit to 8000\nINFO  [alembic.runtime.migration] Running upgrade f5a4f2784254 -> 0584bdc529eb, add cascading deletion to datasets from experiments\nINFO  [alembic.runtime.migration] Context impl SQLiteImpl.\nINFO  [alembic.runtime.migration] Will assume non-transactional DDL.\n2026/11/12 11:44:45 INFO mlflow.projects: 'BankFlow Pipeline Runs' does not exist. Creating a new experiment\n2026/11/12 11:44:45 INFO mlflow.projects.utils: === Created directory /tmp/tmp3_1yw28e for downloading remote URIs passed to arguments of type 'path' ===\n2026/11/12 11:44:45 INFO mlflow.projects.backend.local: === Running command 'python -m pipeline run' in run with ID '08ad987d74f1468482e1f430d2a3b06c' === \nPipeline 1794464085735004334 passed. Approved runs:/1a72859b5d2648db8fa769aae6027ea1/support_model\n2026/11/12 11:45:02 INFO mlflow.projects: === Run (ID '08ad987d74f1468482e1f430d2a3b06c') succeeded ===\n",
+    "lifecycle_log": "FastAPI healthy\nInitial MLflow model loaded and invocation verified\nLive API acceptance: {'model_run_id': '1a72859b5d2648db8fa769aae6027ea1', 'ticket_id': 1, 'banking_balances_restored': True, 'ledger_entries_added': 8}\nOverview displayed\nDeposit succeeded through frontend\nReverse action rendered\nReversal succeeded through frontend\nLive model suggestion rendered\nCorrection action rendered\nReviewed category displayed\nOperations renders serving and timing\nOperations button started a real DVC pipeline\nOperations rendered stage cache reuse\n\nUI-triggered deployment finished before lifecycle test\nInput drift measured through live API tickets\nReviewed feedback triggered automatic training\nSecond model passed quality gate\nSecond model deployed and actually served\nQuality-gate rejection left approved model running\nRollback requested: runs:/a3c5974b502048dda80ed72a1f4e9ba6/support_model\nRollback restored initial version\nPipeline 1794464222692473187 passed. Approved runs:/fc7b3d7442254e04af695a30839c5e8a/support_model\nRe-evaluation of already approved candidate respected rollback\nUnloadable candidate fell back to working MLflow version\nHealthy requested pointer restored\nBaseline/evaluation metrics: {'evaluate_seconds': 0.161006733000022, 'test_accuracy': 0.8860389610389611, 'test_macro_f1': 0.8863992566528391, 'test_rows': 3080}\n",
+    "final_graph_log": "2026/11/12 11:48:16 INFO mlflow.projects.utils: === Created directory /tmp/tmpw6ifz34x for downloading remote URIs passed to arguments of type 'path' ===\n2026/11/12 11:48:16 INFO mlflow.projects.backend.local: === Running command 'python -m pipeline run' in run with ID 'e74718702ede4129b12aef359918d50e' === \nPipeline 1794464296396055237 passed. Approved runs:/86b106955c5e4a26b190335937d38705/support_model\n2026/11/12 11:48:33 INFO mlflow.projects: === Run (ID 'e74718702ede4129b12aef359918d50e') succeeded ===\nStage 'test' didn't change, skipping\nData and pipelines are up to date.\n"
+  },
+  "vm_acceptance_pending": [
+    "Docker image build and complete Compose stack",
+    "real Ray preparation",
+    "Promtool config and alert-rule execution",
+    "actual Prometheus alert firing/recovery and Grafana rendering",
+    "desktop/mobile visual presentation",
+    "VM restart persistence",
+    "ARM64 resource behavior and training memory sampling"
+  ],
+  "security_scope": "Synthetic single-user loopback-only demo. No authentication/TLS/runtime encryption. GnuPG encrypted-backup procedure is documented, not tested here.",
+  "viva": "Student must explain the project and prepare their own Assignments 1\u201310."
+}

@@ -216,8 +216,3 @@ docker compose --profile ai --profile monitoring stop
 
 Use the `up -d` command from Quick start to resume. `docker compose down -v`
 removes named volumes.
-
-## AI assistance disclosure
-
-OpenAI ChatGPT/Codex assisted with design, Python and frontend implementation,
-Docker/DVC/MLflow configuration, tests, debugging, documentation and refactoring.

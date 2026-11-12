@@ -249,8 +249,9 @@ key management, durable audit trails and further security testing.
 
 ## File responsibilities
 
-The 40 files below separate independently editable responsibilities. The dataset,
-tests and documentation are included in this count. Runtime outputs are not.
+The repository tracks 42 application, configuration, data, test, and documentation
+files plus 19 Ubuntu verification reports. Local runtime stores are generated
+during setup and operation.
 
 | File | Responsibility |
 |---|---|
@@ -285,13 +286,16 @@ tests and documentation are included in this count. Runtime outputs are not.
 | `compose.yaml` | Service commands, resource limits, volumes, ports and configuration mounts |
 | `params.yaml` | Preparation, classifier, quality-gate and monitoring parameters |
 | `dvc.yaml` | Tested data/model dependency graph and generated outputs |
+| `dvc.lock` | Recorded stage definitions, dependency hashes and output hashes |
+| `.dvc/config` | Repository-level DVC configuration |
 | `MLproject` | MLflow project entry point using the same Python image |
 | `data/banking77.zip` | Original public dataset, labels, license attribution and hashes |
 | `README.md` | Installation, user guide, verification, and reproduction |
 | `DESIGN.md` | Architecture, HLD, LLD/API contracts, rationale and this file guide |
 | `VALIDATION.md` | Test plan, acceptance criteria, verification results, and evidence |
-| `evidence/test-results.xml` | Machine-generated pytest outcomes for this structure |
-| `evidence/audit.json` | Source hashes, scoped checks and recorded validation outcomes |
+| `evidence/test-results.xml` | Pytest report from the original archive audit |
+| `evidence/audit.json` | Historical source hashes and validation results for the original ZIP |
+| `evidence/vm/` | 19 Ubuntu reports covering tests, training, evaluation, monitoring, model lifecycle, resources, and source revision |
 | `.gitignore` | Excludes generated stores, caches and local environment settings |
 | `.dockerignore` | Excludes generated/local files from the Docker build context |
 

@@ -9,23 +9,21 @@ Operations connects the tested ML pipeline, deployment status and monitoring.
 All money and support tickets are simulated. No requests go to a bank.
 
 - [Design and API specification](DESIGN.md) contains the architecture, HLD and LLD.
-- [Validation and test evidence](VALIDATION.md) covers the test plan,
-  acceptance criteria, and Ubuntu verification results.
-- [Attached test results](evidence/test-results.xml) and
-  [audit evidence](evidence/audit.json) record the checks on this release.
+- [Ubuntu verification](VALIDATION.md#ubuntu-vm-verification) summarizes the
+  deployment and test results, with raw reports in [evidence/vm/](evidence/vm/).
+- [Test plan and acceptance criteria](VALIDATION.md#test-plan-and-acceptance-criteria)
+  describes how to reproduce the checks.
 
 ## Quick start
 
-Install Git, Python 3, and Docker with the Compose v2 plugin. Docker must be
-running. The first build requires internet access to download images and packages.
-BankFlow binds to localhost on ports 8000, 8080, 5000, 9090, and 3000. Free any
-of those ports occupied by an existing instance before starting.
-
-Copy this repository's HTTPS clone URL from GitHub and substitute it for
-`REPOSITORY_URL`. The BANKING77 dataset is included in `data/banking77.zip`.
+On Ubuntu or another Linux host, install Git, Python 3, and Docker with the
+Compose v2 plugin. Start Docker before running the commands. The first build
+downloads images and packages. BankFlow uses localhost ports 8000, 8080, 5000,
+9090, and 3000. Free any of those ports occupied by an existing instance. The
+BANKING77 dataset is included in `data/banking77.zip`.
 
 ```bash
-git clone REPOSITORY_URL bankflow
+git clone https://github.com/MADINENI-SAITEJA/Bank_Project.git bankflow
 cd bankflow
 mkdir -p runtime artifacts mlartifacts
 docker compose config -q
@@ -54,8 +52,9 @@ python3 verify.py
 ```
 
 The first command checks the MLproject run, DVC graph, Prometheus configuration
-and rules, model readiness, and service probes. The second exercises the live
-banking and support APIs. It creates synthetic audit entries and a reviewed
+and rules, model readiness, and service probes. It uses the Linux `free` command
+to record host memory. The second command exercises the live banking and
+support APIs. It creates synthetic audit entries and a reviewed
 ticket, and restores the opening balances. Verification reports are saved in
 `runtime/verification/`.
 
@@ -78,11 +77,12 @@ in a local `.env` before the first launch to choose a different password.
 | `frontend/` | 4 | HTML, CSS, JavaScript and Nginx configuration |
 | `tests/` | 5 | Shared fixtures plus ledger, API, data and pipeline tests |
 | `monitoring/` | 7 | Prometheus, alerts, probe settings and Grafana provisioning/dashboard |
-| Data, build settings, documentation and evidence | 14 | Reproducible dataset, Docker/DVC/MLproject configuration, guides and test reports |
+| Data, build settings, documentation and archive evidence | 16 | Bundled dataset, Docker/DVC/MLproject configuration, guides and the original archive audit |
+| `evidence/vm/` | 19 | Ubuntu test results, pipeline and lifecycle logs, service probes, and resource measurements |
 
-Every file is listed with its role in [DESIGN.md](DESIGN.md). Run the commands
-from the project root. The documented host commands use `cli.py`; existing
-`python -m pipeline` commands remain supported.
+The [file inventory](DESIGN.md#file-responsibilities) describes the 61 tracked
+files. Run commands from the project root. Host commands use `cli.py`, and
+`python -m pipeline` remains supported.
 
 ## User manual
 

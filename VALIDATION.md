@@ -1,17 +1,21 @@
 # BankFlow validation and test evidence
 
-Release audit: **12 November 2026 (India time)**.
+## Ubuntu VM verification
 
-## Structure update
+- The Docker Compose deployment ran successfully on Ubuntu. All 58 tests passed
+  with zero failures, errors, or skips. The live HTTP acceptance check passed for
+  ledger operations, retries, reversals, inference, reviews, and the API contract.
+- The VM pipeline ran real Ray Data preparation, passed the model quality gate,
+  and served the approved model. The test report, pipeline results, and resource
+  measurements are in [evidence/vm/](evidence/vm/).
+- Prometheus configuration and rule checks passed. All five service probes
+  passed, all eight scrape targets were UP, and Grafana displayed live metrics.
+- `python3 verify.py --lifecycle` exited with code 0. It verified drift-triggered
+  retraining and deployment, quality-gate rejection, rollback, outage handling,
+  and Prometheus alert recovery. [Lifecycle log](evidence/vm/lifecycle.log)
+- Firefox rendered Overview at 320 × 480 with all three navigation tabs visible.
 
-The release is organized into 40 files. Ledger rules and API schemas have their
-own modules; data preparation is separate from model fitting; host commands are
-in `cli.py`. HTML, CSS and JavaScript are separate files. Tests are grouped by
-subsystem, and each monitoring configuration is a normal file. Existing pipeline
-entry points remain available. The dataset and application behavior are retained.
-The results below were rechecked after the reorganization.
-
-## Corrections made during this audit
+## Engineering changes from the original ZIP audit
 
 - Replaced substring queue rules with issue-token rules. Top-up requests and
   swallowed-card/ATM issues now reach their intended queues.
@@ -70,10 +74,14 @@ Performance values are measurements, not universal latency/throughput guarantees
 Docker's periodic memory sampling can miss short peaks; it is not an exact peak
 resident-memory profiler. There is no separate high-concurrency load-test claim.
 
-## Executed release results
+## Historical ZIP audit
 
-- Exact release Python tests: **58 passed, 0 failed, 0 errors, 0 skipped**.
-  `evidence/test-results.xml` is the actual pytest JUnit report. The test run uses
+These results apply to `BankFlow_Clear_Structure.zip`, audited on 12 November
+2026 before the Ubuntu deployment. The [archive audit](evidence/audit.json)
+retains the ZIP's file manifest and source hashes.
+
+- Python tests: **58 passed, 0 failed, 0 errors, 0 skipped**.
+  [Pytest report](evidence/test-results.xml). The test run used
   native Python 3.12.14; the Dockerfile specifies Python 3.11 for the VM.
 - All 15 Python application/test files pass Black's 88-column formatting check.
 - Bundled dataset bytes are unchanged from the original release archive, and
@@ -100,14 +108,6 @@ For the native MLproject/lifecycle checks, a disposable copy used pandas in the
 other application/model/pipeline logic was exercised directly. **The ZIP retains
 real Ray Data and has no pandas fallback.** The original and adjusted source
 hashes and check scope are recorded in `evidence/audit.json`.
-
-## Ubuntu VM verification
-
-- The Docker Compose deployment ran successfully on Ubuntu. All 58 tests passed with zero failures, errors, or skips. The live HTTP acceptance check passed for ledger operations, retries, reversals, inference, reviews, and the API contract.
-- The VM pipeline ran real Ray Data preparation, passed the model quality gate, and served the approved model. The test report, pipeline results, and resource measurements are in `evidence/vm/`.
-- Prometheus configuration and rule checks passed. All five service probes passed, all eight scrape targets were UP, and Grafana displayed live metrics.
-- `python3 verify.py --lifecycle` exited with code 0. It verified drift-triggered retraining and deployment, quality-gate rejection, rollback, outage handling, and Prometheus alert recovery. See `evidence/vm/lifecycle.log`.
-- Firefox rendered Overview at 320 × 480 with all three navigation tabs visible.
 
 ## Isolated test cases
 

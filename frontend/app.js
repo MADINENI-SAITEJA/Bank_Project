@@ -29,10 +29,12 @@ let categories = [],
   currentView = "account",
   pendingTransaction = null;
 const reverseKeys = new Map();
-function notice(message, error = false) {
-  $("notice").textContent = message;
-  $("notice").className = error ? "error" : "";
-  $("notice").hidden = false;
+function notice(message, error = false, view = currentView) {
+  if (view !== currentView) return;
+  const banner = $("notice");
+  banner.textContent = message;
+  banner.className = error ? "error" : "";
+  banner.hidden = !message;
 }
 async function api(path, method = "GET", body) {
   let response;
@@ -103,10 +105,10 @@ async function refreshAccount() {
           await api("/api/transactions/" + id + "/reverse", "POST", {
             request_key: reverseKeys.get(id),
           });
-          notice("Transaction reversed.");
+          notice("Transaction reversed.", false, "account");
           await refreshAccount();
         } catch (e) {
-          notice(e.message, true);
+          notice(e.message, true, "account");
           btn.disabled = false;
           if (e.definitive) reverseKeys.delete(id);
         }
@@ -135,12 +137,14 @@ $("transaction-form").onsubmit = async (e) => {
       result.replayed
         ? "Existing transaction confirmed; no duplicate entry."
         : "Transaction completed.",
+      false,
+      "account",
     );
     $("amount").value = "";
     $("memo").value = "";
     await refreshAccount();
   } catch (err) {
-    notice(err.message, true);
+    notice(err.message, true, "account");
     if (err.definitive) pendingTransaction = null;
   } finally {
     btn.disabled = false;
@@ -166,10 +170,12 @@ async function refreshTickets() {
           });
           notice(
             "Review saved. Eligible feedback can be used by the monitored retraining pipeline.",
+            false,
+            "support",
           );
           await refreshTickets();
         } catch (e) {
-          notice(e.message, true);
+          notice(e.message, true, "support");
           btn.disabled = false;
         }
       }),
@@ -186,7 +192,7 @@ $("support-form").onsubmit = async (e) => {
       `<span class="tag ${p.needs_review ? "review" : ""}">${p.needs_review ? "Agent review suggested" : "Suggested route"}</span><h3>${esc(p.queue)}</h3><p>${esc(p.category)}</p><strong>${(p.confidence * 100).toFixed(1)}% model score</strong>`;
     await refreshTickets();
   } catch (err) {
-    notice(err.message, true);
+    notice(err.message, true, "support");
   } finally {
     btn.disabled = false;
   }
@@ -289,20 +295,23 @@ $("run-pipeline").onclick = async () => {
   btn.disabled = true;
   try {
     await api("/api/pipeline/run", "POST");
-    notice("Pipeline requested. Refreshing its status…");
+    notice("Pipeline requested. Refreshing its status…", false, "operations");
     setTimeout(
-      () => refreshOperations().catch((e) => notice(e.message, true)),
+      () =>
+        refreshOperations().catch((e) => notice(e.message, true, "operations")),
       1500,
     );
   } catch (e) {
-    notice(e.message, true);
+    notice(e.message, true, "operations");
     btn.disabled = false;
   }
 };
 document.querySelectorAll("nav button").forEach(
   (btn) =>
     (btn.onclick = () => {
-      currentView = btn.dataset.view;
+      const view = btn.dataset.view;
+      if (view !== currentView) notice("");
+      currentView = view;
       document
         .querySelectorAll("main>section")
         .forEach((s) => (s.hidden = s.id !== currentView + "-view"));
@@ -320,13 +329,13 @@ document.querySelectorAll("nav button").forEach(
         support: refreshTickets,
         operations: refreshOperations,
       }[currentView];
-      load().catch((e) => notice(e.message, true));
+      load().catch((e) => notice(e.message, true, view));
     }),
 );
 $("refresh-account").onclick = () =>
-  refreshAccount().catch((e) => notice(e.message, true));
+  refreshAccount().catch((e) => notice(e.message, true, "account"));
 $("refresh-tickets").onclick = () =>
-  refreshTickets().catch((e) => notice(e.message, true));
+  refreshTickets().catch((e) => notice(e.message, true, "support"));
 $("mlflow-link").href = cfg.mlflowUrl;
 $("grafana-link").href = cfg.grafanaUrl;
 async function start() {

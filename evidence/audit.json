@@ -1,25 +1,8 @@
 {
   "generated_at_utc": "2026-11-12T06:19:17.724830+00:00",
   "release": "BankFlow_Clear_Structure.zip",
-  "rubric": {
-    "development_guidelines": {
-      "title": "AI Application Development Guidelines.pdf",
-      "sha256": "9a1a9f1f5fd506061020a9e7b99abb6664ffbdb75552047a62705624580e7850"
-    },
-    "evaluation_guideline": {
-      "title": "AI Application Evaluation Guideline (1) (1).pdf",
-      "sha256": "56ad7cd71292efa2e50f34c9051a6f05027bdf339bda717627780b4a833b3aad"
-    },
-    "total_points": 25,
-    "mandatory_document_topics": [
-      "architecture and block explanation",
-      "high-level design and rationale",
-      "low-level design and API I/O",
-      "test plan and cases",
-      "nontechnical user manual"
-    ],
-    "separate_additional_rubric_available": false
-  },
+  "scope": "Historical audit of the original ZIP before Ubuntu VM verification. The file manifest and hashes describe that archive.",
+  "later_vm_evidence": "evidence/vm/",
   "packaged_files": [
     "app.py",
     "ledger.py",
@@ -127,7 +110,7 @@
     "dvc_paths_and_document_links": "passed"
   },
   "dataset": {
-    "unchanged_from_submission_zip": true,
+    "unchanged_from_previous_archive": true,
     "classes": 77,
     "raw": {
       "train.csv": {
@@ -262,7 +245,7 @@
     "lifecycle_log": "FastAPI healthy\nInitial MLflow model loaded and invocation verified\nLive API acceptance: {'model_run_id': '1a72859b5d2648db8fa769aae6027ea1', 'ticket_id': 1, 'banking_balances_restored': True, 'ledger_entries_added': 8}\nOverview displayed\nDeposit succeeded through frontend\nReverse action rendered\nReversal succeeded through frontend\nLive model suggestion rendered\nCorrection action rendered\nReviewed category displayed\nOperations renders serving and timing\nOperations button started a real DVC pipeline\nOperations rendered stage cache reuse\n\nUI-triggered deployment finished before lifecycle test\nInput drift measured through live API tickets\nReviewed feedback triggered automatic training\nSecond model passed quality gate\nSecond model deployed and actually served\nQuality-gate rejection left approved model running\nRollback requested: runs:/a3c5974b502048dda80ed72a1f4e9ba6/support_model\nRollback restored initial version\nPipeline 1794464222692473187 passed. Approved runs:/fc7b3d7442254e04af695a30839c5e8a/support_model\nRe-evaluation of already approved candidate respected rollback\nUnloadable candidate fell back to working MLflow version\nHealthy requested pointer restored\nBaseline/evaluation metrics: {'evaluate_seconds': 0.161006733000022, 'test_accuracy': 0.8860389610389611, 'test_macro_f1': 0.8863992566528391, 'test_rows': 3080}\n",
     "final_graph_log": "2026/11/12 11:48:16 INFO mlflow.projects.utils: === Created directory /tmp/tmpw6ifz34x for downloading remote URIs passed to arguments of type 'path' ===\n2026/11/12 11:48:16 INFO mlflow.projects.backend.local: === Running command 'python -m pipeline run' in run with ID 'e74718702ede4129b12aef359918d50e' === \nPipeline 1794464296396055237 passed. Approved runs:/86b106955c5e4a26b190335937d38705/support_model\n2026/11/12 11:48:33 INFO mlflow.projects: === Run (ID 'e74718702ede4129b12aef359918d50e') succeeded ===\nStage 'test' didn't change, skipping\nData and pipelines are up to date.\n"
   },
-  "vm_acceptance_pending": [
+  "checks_outside_original_audit": [
     "Docker image build and complete Compose stack",
     "real Ray preparation",
     "Promtool config and alert-rule execution",
@@ -271,6 +254,5 @@
     "VM restart persistence",
     "ARM64 resource behavior and training memory sampling"
   ],
-  "security_scope": "Synthetic single-user loopback-only demo. No authentication/TLS/runtime encryption. GnuPG encrypted-backup procedure is documented, not tested here.",
-  "viva": "Student must explain the project and prepare their own Assignments 1\u201310."
+  "security_scope": "Synthetic single-user loopback-only demo. No authentication/TLS/runtime encryption. GnuPG encrypted-backup procedure is documented, not tested here."
 }

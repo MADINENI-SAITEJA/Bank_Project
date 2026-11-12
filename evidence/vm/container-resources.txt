@@ -1,0 +1,8 @@
+CONTAINER ID   NAME                               CPU %     MEM USAGE / LIMIT   MEM %     NET I/O           BLOCK I/O        PIDS
+776cbfaf1059   bankflow-submission-backend-1      0.18%     42.8MiB / 3GiB      1.39%     20.3kB / 100kB    0B / 49.2kB      3
+d9d1af04ebdf   bankflow-submission-frontend-1     0.00%     13.09MiB / 96MiB    13.64%    9.68kB / 6.06kB   7.88MB / 4.1kB   7
+40c77a76bace   bankflow-submission-grafana-1      1.25%     164.7MiB / 256MiB   64.34%    3.71MB / 80.9kB   2.21GB / 208MB   21
+1b6b3e5772c4   bankflow-submission-mlflow-1       0.02%     323.5MiB / 640MiB   50.55%    10.4kB / 6.31kB   0B / 0B          3
+6dd1a6fa90a1   bankflow-submission-model-1        0.30%     530.3MiB / 768MiB   69.05%    10.9kB / 6.04kB   0B / 4.1kB       12
+1776b4f7d3dd   bankflow-submission-probe-1        0.00%     30.1MiB / 64MiB     47.03%    74.9kB / 112kB    19.9MB / 0B      11
+0026bb52210f   bankflow-submission-prometheus-1   0.08%     216.4MiB / 256MiB   84.52%    171kB / 48.8kB    202MB / 340kB    9

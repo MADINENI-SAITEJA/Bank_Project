@@ -287,9 +287,9 @@ tests and documentation are included in this count. Runtime outputs are not.
 | `dvc.yaml` | Tested data/model dependency graph and generated outputs |
 | `MLproject` | MLflow project entry point using the same Python image |
 | `data/banking77.zip` | Original public dataset, labels, license attribution and hashes |
-| `README.md` | Installation, user manual, demo, reproduction, submission and disclosure |
+| `README.md` | Installation, user guide, verification, and reproduction |
 | `DESIGN.md` | Architecture, HLD, LLD/API contracts, rationale and this file guide |
-| `VALIDATION.md` | Rubric mapping, test plan, results, pending VM checks and viva preparation |
+| `VALIDATION.md` | Test plan, acceptance criteria, verification results, and evidence |
 | `evidence/test-results.xml` | Machine-generated pytest outcomes for this structure |
 | `evidence/audit.json` | Source hashes, scoped checks and recorded validation outcomes |
 | `.gitignore` | Excludes generated stores, caches and local environment settings |

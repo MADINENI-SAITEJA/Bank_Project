@@ -1,0 +1,57 @@
+[
+  {
+    "metric": {
+      "__name__": "probe_success",
+      "instance": "http://frontend/health",
+      "job": "service-health"
+    },
+    "value": [
+      1794466237.565,
+      "1"
+    ]
+  },
+  {
+    "metric": {
+      "__name__": "probe_success",
+      "instance": "http://grafana:3000/api/health",
+      "job": "service-health"
+    },
+    "value": [
+      1794466237.565,
+      "1"
+    ]
+  },
+  {
+    "metric": {
+      "__name__": "probe_success",
+      "instance": "http://mlflow:5000/health",
+      "job": "service-health"
+    },
+    "value": [
+      1794466237.565,
+      "1"
+    ]
+  },
+  {
+    "metric": {
+      "__name__": "probe_success",
+      "instance": "http://backend:8000/health",
+      "job": "service-health"
+    },
+    "value": [
+      1794466237.565,
+      "1"
+    ]
+  },
+  {
+    "metric": {
+      "__name__": "probe_success",
+      "instance": "http://model:5001/ping",
+      "job": "service-health"
+    },
+    "value": [
+      1794466237.565,
+      "1"
+    ]
+  }
+]

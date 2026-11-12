@@ -1,0 +1,22 @@
+{
+  "run_id": "9a859adad9e84dd196119bdeafc16ac8",
+  "git_commit": "ef928e3e7dda15962fc1d91e477b351e811e1e33",
+  "selected_model": "logistic",
+  "validation": [
+    {
+      "model": "naive_bayes",
+      "accuracy": 0.8119059529764883,
+      "macro_f1": 0.786538969999909,
+      "train_seconds": 0.0432091440000022
+    },
+    {
+      "model": "logistic",
+      "accuracy": 0.870935467733867,
+      "macro_f1": 0.8707047104007051,
+      "train_seconds": 0.9270302790000642
+    }
+  ],
+  "train_rows": 9993,
+  "features": 10000,
+  "reviewed_training_rows": 0
+}

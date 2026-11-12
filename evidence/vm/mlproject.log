@@ -1,0 +1,4 @@
+2026/11/12 06:50:34 INFO mlflow.projects.utils: === Created directory /tmp/tmp4m4bjjdp for downloading remote URIs passed to arguments of type 'path' ===
+2026/11/12 06:50:34 INFO mlflow.projects.backend.local: === Running command 'python -m pipeline run' in run with ID '444ddba2de324385a125966763605940' === 
+Pipeline 1794466234598340151 passed. Approved runs:/9a859adad9e84dd196119bdeafc16ac8/support_model
+2026/11/12 06:50:36 INFO mlflow.projects: === Run (ID '444ddba2de324385a125966763605940') succeeded ===

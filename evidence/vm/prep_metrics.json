@@ -1,0 +1,14 @@
+{
+  "classes": 77,
+  "removed_train_test_overlap": 6,
+  "rows": {
+    "test": 3080,
+    "train": 9993
+  },
+  "rows_per_second": 3597.742234865395,
+  "seconds": 3.633667768999885,
+  "source_sha256": {
+    "test.csv": "d12d6e3bc4c3103966ae786dc435913c0c563dfa328f5a3646d0e62cfeeb474d",
+    "train.csv": "b06e26ac675513959a63135f11b94ea7786ed02da65db93a5650d8838cbc664b"
+  }
+}

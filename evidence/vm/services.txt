@@ -1,0 +1,8 @@
+NAME                               IMAGE                            COMMAND                  SERVICE      CREATED         STATUS                   PORTS
+bankflow-submission-backend-1      bankflow-python:submission       "uvicorn app:app --h…"   backend      2 minutes ago   Up 2 minutes (healthy)   127.0.0.1:8000->8000/tcp
+bankflow-submission-frontend-1     bankflow-submission-frontend     "/docker-entrypoint.…"   frontend     2 minutes ago   Up 2 minutes             127.0.0.1:8080->80/tcp
+bankflow-submission-grafana-1      grafana/grafana:11.6.0           "/run.sh"                grafana      2 minutes ago   Up 2 minutes             127.0.0.1:3000->3000/tcp
+bankflow-submission-mlflow-1       bankflow-python:submission       "mlflow server --bac…"   mlflow       2 minutes ago   Up 2 minutes             127.0.0.1:5000->5000/tcp
+bankflow-submission-model-1        bankflow-python:submission       "python -m model"        model        2 minutes ago   Up 2 minutes (healthy)   
+bankflow-submission-probe-1        prom/blackbox-exporter:v0.26.0   "/bin/blackbox_expor…"   probe        2 minutes ago   Up 2 minutes             9115/tcp
+bankflow-submission-prometheus-1   prom/prometheus:v3.2.1           "/bin/prometheus --c…"   prometheus   2 minutes ago   Up 2 minutes             127.0.0.1:9090->9090/tcp

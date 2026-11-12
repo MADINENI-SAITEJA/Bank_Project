@@ -9,78 +9,57 @@ Operations connects the tested ML pipeline, deployment status and monitoring.
 All money and support tickets are simulated. No requests go to a bank.
 
 - [Design and API specification](DESIGN.md) contains the architecture, HLD and LLD.
-- [Validation and rubric mapping](VALIDATION.md) contains the test plan, cases,
-  results, acceptance criteria, recording checklist and viva preparation.
+- [Validation and test evidence](VALIDATION.md) covers the test plan,
+  acceptance criteria, and Ubuntu verification results.
 - [Attached test results](evidence/test-results.xml) and
   [audit evidence](evidence/audit.json) record the checks on this release.
 
-## Start on your Ubuntu VM
+## Quick start
 
-Your earlier ARM64 Ubuntu VM had approximately 11 GiB RAM and Docker Compose.
-Use the VM's terminal and browser. The software runs locally, with no cloud
-platform. An internet connection is needed for the first Docker build and pulls.
+Install Git, Python 3, and Docker with the Compose v2 plugin. Docker must be
+running. The first build requires internet access to download images and packages.
+BankFlow binds to localhost on ports 8000, 8080, 5000, 9090, and 3000. Free any
+of those ports occupied by an existing instance before starting.
 
-1. Put `BankFlow_Clear_Structure.zip` in the VM's `~/Downloads` directory. Stop any
-   older BankFlow stack from **its own project directory** to free ports 8000,
-   8080, 5000, 9090 and 3000:
+Copy this repository's HTTPS clone URL from GitHub and substitute it for
+`REPOSITORY_URL`. The BANKING77 dataset is included in `data/banking77.zip`.
 
-   ```bash
-   docker compose --profile ai --profile monitoring stop
-   ```
+```bash
+git clone REPOSITORY_URL bankflow
+cd bankflow
+mkdir -p runtime artifacts mlartifacts
+docker compose config -q
+docker compose build backend frontend
+python3 cli.py check
+```
 
-2. Extract into a new directory so your earlier project and its data stay intact:
+The pipeline runs the tests, prepares the data with Ray, compares two models,
+and approves a model if it passes the evaluation gate. If a stage fails, check
+its log in `runtime/runs/`.
 
-   ```bash
-   mkdir -p "$HOME/bankflow_clear_structure"
-   python3 -m zipfile -e "$HOME/Downloads/BankFlow_Clear_Structure.zip" "$HOME/bankflow_clear_structure"
-   cd "$HOME/bankflow_clear_structure/BankFlow"
-   git init -b main
-   mkdir -p .dvc runtime artifacts mlartifacts
-   touch .dvc/config
-   git add .
-   git commit -m "Add checked BankFlow project"
-   ```
+Start the application and monitoring services after the pipeline succeeds.
 
-   If Git asks for an identity, set `git config user.name "Your Name"` and
-   `git config user.email "your-git-email@example.com"` in this checkout, then
-   retry the commit. The commit is required for experiment provenance.
+```bash
+docker compose --profile ai --profile monitoring up -d \
+  backend frontend model mlflow prometheus grafana probe
+docker compose --profile ai --profile monitoring ps
+```
 
-3. Build and run the test/training pipeline:
+Once the backend and model show `healthy`, open the application or run the
+verification checks from the repository root.
 
-   ```bash
-   docker compose config -q
-   docker compose build backend frontend
-   python3 cli.py check
-   ```
+```bash
+python3 cli.py verify
+python3 verify.py
+```
 
-   This runs **test → prepare → train → evaluate**, records stage logs and
-   samples trainer resources. Preparation uses real Ray Data. MLflow compares
-   Naive Bayes with logistic regression and logs the chosen model. The quality
-   gate requires held-out macro-F1 of at least 0.65. If a stage fails, read its
-   named log in `runtime/runs/`; the previous deployment is retained.
+The first command checks the MLproject run, DVC graph, Prometheus configuration
+and rules, model readiness, and service probes. The second exercises the live
+banking and support APIs. It creates synthetic audit entries and a reviewed
+ticket, and restores the opening balances. Verification reports are saved in
+`runtime/verification/`.
 
-4. Record DVC's lock and start all seven long-running services:
-
-   ```bash
-   git add dvc.lock
-   git diff --cached --quiet || git commit -m "Record successful BankFlow pipeline"
-   docker compose --profile ai --profile monitoring up -d \
-     backend frontend model mlflow prometheus grafana probe
-   python3 cli.py verify
-   python3 verify.py
-   ```
-
-   `cli.py verify` checks the MLproject entry point, DVC DAG, Prometheus
-   configuration and alert-rule tests, approved model and five service probes.
-   `verify.py` exercises live banking and support APIs. It adds eight audit
-   entries, restores the opening balances, and keeps one synthetic reviewed
-   ticket. Reports go to `runtime/verification/`.
-
-The configurations are ordinary files under `frontend/` and `monitoring/`.
-Use Docker Compose v2; your previously reported Compose 2.40.3 supports this layout. Docker and genuine Ray execution
-of this corrected release must be confirmed on the VM; see the validation report.
-
-| Open in the VM browser | Purpose |
+| Local URL | Purpose |
 |---|---|
 | http://localhost:8080 | BankFlow application |
 | http://localhost:8000/docs | Interactive request and response contracts |
@@ -205,7 +184,7 @@ Compare input hashes, parameters and metrics. The replay receives a new run ID.
 The source snapshot is necessary when the recorded working tree was dirty.
 Preserve `runtime/`, `mlartifacts/`, `artifacts/`, `data/prepared/` and `.dvc/cache/`
 for local history and rollback. GitHub contains the code and reproducible dataset,
-not those generated stores. No DVC remote is required for this local assignment.
+not those generated stores. No DVC remote is required to run the local pipeline.
 
 For an encrypted offline backup with GnuPG installed, stop the stack first:
 
@@ -223,24 +202,22 @@ tar -xzf -`. This protects the exported backup. Runtime databases and HTTP
 traffic remain unencrypted in the local demo. Named Prometheus/Grafana volumes
 are not in this archive; their configuration can be recreated from Compose.
 
-## Submit and record
+## Verification evidence
 
-Push the extracted source files, the supplied evidence, `.dvc/config` and your
-VM-generated `dvc.lock`. For fresh VM evidence, create `evidence/vm/` and copy
-`runtime/test-results.xml`, `runtime/verification/`, `artifacts/metrics.json`,
-`artifacts/training.json` and `data/prepared/prep_metrics.json` into it. Inspect
-these before committing. They should contain only synthetic demo data.
+The [validation report](VALIDATION.md) summarizes the Ubuntu VM checks.
+The [VM evidence](evidence/vm/) includes the [pytest report](evidence/vm/test-results.xml),
+pipeline results, service probes, and the [lifecycle log](evidence/vm/lifecycle.log).
 
-The project contains 40 packaged files, organized by responsibility. Each has a defined role in the file guide
-in [DESIGN.md](DESIGN.md). Generated model binaries, databases and caches are
-ignored by Git. Do not run `docker compose down -v` if you want to keep dashboard
-history. Use `docker compose --profile ai --profile monitoring stop` to pause,
-and the earlier `up -d` command to resume.
+To stop services and preserve local history, run:
+
+```bash
+docker compose --profile ai --profile monitoring stop
+```
+
+Use the `up -d` command from Quick start to resume. `docker compose down -v`
+removes named volumes.
 
 ## AI assistance disclosure
 
 OpenAI ChatGPT/Codex assisted with design, Python and frontend implementation,
 Docker/DVC/MLflow configuration, tests, debugging, documentation and refactoring.
-The evidence states what was actually checked and which VM checks remain.
-The student must understand and demonstrate the project and follow their
-course's disclosure rules.

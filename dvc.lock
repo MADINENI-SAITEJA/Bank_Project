@@ -1,0 +1,228 @@
+schema: '2.0'
+stages:
+  test:
+    cmd: python -m pytest tests -q --junitxml=runtime/test-results.xml
+    deps:
+    - path: app.py
+      hash: md5
+      md5: ab776918d7b9fec430ffc962298b71cf
+      size: 10666
+    - path: cli.py
+      hash: md5
+      md5: fdd7b54cf9d54ebaa7719cec8b643bef
+      size: 8438
+    - path: data/banking77.zip
+      hash: md5
+      md5: 04feb745cf81ae1ac27080c26612ea4b
+      size: 209368
+    - path: data_pipeline.py
+      hash: md5
+      md5: b3ae97e6008f7db8c008796c0d21e048
+      size: 9032
+    - path: ledger.py
+      hash: md5
+      md5: 42190b1a722f5e7900f46c3dffa2b861
+      size: 8093
+    - path: model.py
+      hash: md5
+      md5: 744046684f65b92eb6220b50084e9dfd
+      size: 6840
+    - path: pipeline.py
+      hash: md5
+      md5: 4a71b2c16e7f93dd80379917a98f464a
+      size: 9510
+    - path: requirements.txt
+      hash: md5
+      md5: c9088e3907d354ba36d1c94fc3c61532
+      size: 277
+    - path: routing.py
+      hash: md5
+      md5: d3977efe0b34c981ea826432b82fe94d
+      size: 711
+    - path: schemas.py
+      hash: md5
+      md5: 17c9a710370351d840e4e0758ace2a3f
+      size: 2318
+    - path: tests/conftest.py
+      hash: md5
+      md5: 5472d27cd3b42e64a5c6af5620cd78c9
+      size: 744
+    - path: tests/test_api.py
+      hash: md5
+      md5: 0dc2310b015ca25f4467bf0e8cdf6368
+      size: 4951
+    - path: tests/test_ledger.py
+      hash: md5
+      md5: b3af2044eaeae63a6c218d138196f827
+      size: 5001
+    - path: tests/test_pipeline.py
+      hash: md5
+      md5: 691b62d05063f6c10ea1ea9e33012831
+      size: 2742
+    - path: tests/test_training.py
+      hash: md5
+      md5: 3884f4c7c44f7fd999935cec76cc79f8
+      size: 4174
+    - path: training.py
+      hash: md5
+      md5: 8462dbca848e807ac8fc648d14bb356d
+      size: 12441
+    - path: verify.py
+      hash: md5
+      md5: cd44e3f746f27694bff83fc4ff84a270
+      size: 8512
+    outs:
+    - path: runtime/test-results.xml
+      hash: md5
+      md5: 3278cb6129e293cdfd787d8cb62ff55e
+      size: 6224
+  prepare:
+    cmd: python -m data_pipeline
+    deps:
+    - path: data/banking77.zip
+      hash: md5
+      md5: 04feb745cf81ae1ac27080c26612ea4b
+      size: 209368
+    - path: data_pipeline.py
+      hash: md5
+      md5: b3ae97e6008f7db8c008796c0d21e048
+      size: 9032
+    params:
+      params.yaml:
+        prepare:
+          cpus: 2
+    outs:
+    - path: data/prepared/prep_metrics.json
+      hash: md5
+      md5: 2984656f0980857318e86cbe9ecc0992
+      size: 374
+    - path: data/prepared/profile.json
+      hash: md5
+      md5: 056b0c271bdd6f0918ad4fc344b11368
+      size: 40372
+    - path: data/prepared/test.parquet
+      hash: md5
+      md5: c2ae2d0c75f0ad806ac871a0cf29deb6
+      size: 89201
+    - path: data/prepared/train.parquet
+      hash: md5
+      md5: c0d7f38fd414c7bc188a784b97a27368
+      size: 289401
+  train:
+    cmd: python -m training train
+    deps:
+    - path: data/prepared/prep_metrics.json
+      hash: md5
+      md5: 2984656f0980857318e86cbe9ecc0992
+      size: 374
+    - path: data/prepared/profile.json
+      hash: md5
+      md5: 056b0c271bdd6f0918ad4fc344b11368
+      size: 40372
+    - path: data/prepared/train.parquet
+      hash: md5
+      md5: c0d7f38fd414c7bc188a784b97a27368
+      size: 289401
+    - path: data_pipeline.py
+      hash: md5
+      md5: b3ae97e6008f7db8c008796c0d21e048
+      size: 9032
+    - path: model.py
+      hash: md5
+      md5: 744046684f65b92eb6220b50084e9dfd
+      size: 6840
+    - path: requirements.txt
+      hash: md5
+      md5: c9088e3907d354ba36d1c94fc3c61532
+      size: 277
+    - path: routing.py
+      hash: md5
+      md5: d3977efe0b34c981ea826432b82fe94d
+      size: 711
+    - path: runtime/reviewed_feedback.json
+      hash: md5
+      md5: 6283c74d30ca665d6d8692394f442ed0
+      size: 17
+    - path: runtime/test-results.xml
+      hash: md5
+      md5: 3278cb6129e293cdfd787d8cb62ff55e
+      size: 6224
+    - path: training.py
+      hash: md5
+      md5: 8462dbca848e807ac8fc648d14bb356d
+      size: 12441
+    params:
+      params.yaml:
+        train:
+          seed: 42
+          max_features: 10000
+          validation_fraction: 0.2
+          nb_alpha: 0.5
+          logistic_C: 4.0
+          max_iter: 200
+          review_threshold: 0.45
+    outs:
+    - path: artifacts/candidate_uri.txt
+      hash: md5
+      md5: b76159967069538b980f8f462409a3ef
+      size: 53
+    - path: artifacts/feature_weights.csv
+      hash: md5
+      md5: 411bb2e08defa698971c967156abf558
+      size: 28007
+    - path: artifacts/model.joblib
+      hash: md5
+      md5: f4a7bfe5b41cebcb41de5e51038b2508
+      size: 5860673
+    - path: artifacts/training.json
+      hash: md5
+      md5: f3939bd6c6c94b84161e593583887eab
+      size: 555
+  evaluate:
+    cmd: python -m training evaluate
+    deps:
+    - path: artifacts/candidate_uri.txt
+      hash: md5
+      md5: b76159967069538b980f8f462409a3ef
+      size: 53
+    - path: artifacts/model.joblib
+      hash: md5
+      md5: f4a7bfe5b41cebcb41de5e51038b2508
+      size: 5860673
+    - path: artifacts/training.json
+      hash: md5
+      md5: f3939bd6c6c94b84161e593583887eab
+      size: 555
+    - path: data/prepared/test.parquet
+      hash: md5
+      md5: c2ae2d0c75f0ad806ac871a0cf29deb6
+      size: 89201
+    - path: data_pipeline.py
+      hash: md5
+      md5: b3ae97e6008f7db8c008796c0d21e048
+      size: 9032
+    - path: routing.py
+      hash: md5
+      md5: d3977efe0b34c981ea826432b82fe94d
+      size: 711
+    - path: training.py
+      hash: md5
+      md5: 8462dbca848e807ac8fc648d14bb356d
+      size: 12441
+    params:
+      params.yaml:
+        evaluate:
+          minimum_macro_f1: 0.65
+    outs:
+    - path: artifacts/approved_uri.txt
+      hash: md5
+      md5: b76159967069538b980f8f462409a3ef
+      size: 53
+    - path: artifacts/confusion_matrix.csv
+      hash: md5
+      md5: 12385e4368cf2430b92742f0fdacf993
+      size: 15234
+    - path: artifacts/metrics.json
+      hash: md5
+      md5: 98afd1134fbf9ca297f3c7ad08dffeef
+      size: 12403

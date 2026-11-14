@@ -10,7 +10,8 @@ All money and support tickets are simulated. No requests go to a bank.
 
 - [Project report](Report.pdf) summarizes the system design, model results, and VM verification.
 - [AI disclosure](AI_Disclosure.md) describes how AI was used in the project.
-- [Design and API specification](DESIGN.md) contains the architecture, HLD and LLD.
+- [High-level design (HLD)](HLD.md) covers the architecture, design choices, and pipeline.
+- [Low-level design (LLD)](LLD.md) specifies API endpoints, inputs, outputs and failure handling.
 - [Ubuntu verification](VALIDATION.md#ubuntu-vm-verification) summarizes the
   deployment and test results, with raw reports in [evidence/vm/](evidence/vm/).
 - [Test plan and acceptance criteria](VALIDATION.md#test-plan-and-acceptance-criteria)
@@ -90,11 +91,11 @@ in a local `.env` before the first launch to choose a different password.
 | `frontend/` | 4 | HTML, CSS, JavaScript and Nginx configuration |
 | `tests/` | 5 | Shared fixtures plus ledger, API, data and pipeline tests |
 | `monitoring/` | 7 | Prometheus, alerts, probe settings and Grafana provisioning/dashboard |
-| Data, build settings, documentation and archive evidence | 16 | Bundled dataset, Docker/DVC/MLproject configuration, guides and the original archive audit |
+| Data, build settings, documentation and archive evidence | 17 | Bundled dataset, Docker/DVC/MLproject configuration, guides and the original archive audit |
 | Submission documents | 2 | Project report and AI disclosure |
 | `evidence/vm/` | 19 | Ubuntu test results, pipeline and lifecycle logs, service probes, and resource measurements |
 
-See the [file inventory](DESIGN.md#file-responsibilities) for details on the code
+See the [file inventory](HLD.md#file-responsibilities) for details on the code
 and configuration. Run commands from the project root. Host commands use `cli.py`, and
 `python -m pipeline` remains supported.
 

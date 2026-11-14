@@ -39,7 +39,7 @@
 
 | Guideline theme | Evidence and qualification |
 |---|---|
-| Problem and measurable outcomes | DESIGN.md scope and acceptance criteria |
+| Problem and measurable outcomes | [Scope and success criteria](HLD.md#problem-scope-and-success-criteria) |
 | Data acquisition, bias and EDA | Bundled original BANKING77 splits/license/hashes; validation, class counts and text-length profile. English and closed-label bias documented. |
 | Preprocessing and feature engineering | Ray transformations, Parquet, training-only TF-IDF unigrams/bigrams, no test vocabulary leakage, feature weights |
 | Model development and comparison | Stratified validation, two candidates, selection by macro-F1, full refit and untouched official holdout |

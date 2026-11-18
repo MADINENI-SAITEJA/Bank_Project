@@ -8,6 +8,8 @@ into 77 BANKING77 intents, suggests a support queue and records human reviews.
 Operations connects the tested ML pipeline, deployment status and monitoring.
 All money and support tickets are simulated. No requests go to a bank.
 
+## Project demonstration video link - https://drive.google.com/file/d/19UjsOqqO1b67Z31yahdWh1UJ3DZcSpP7/view?usp=drive_link
+
 - [Project report](Report.pdf) summarizes the system design, model results, and VM verification.
 - [AI disclosure](AI_Disclosure.md) describes how AI was used in the project.
 - [High-level design (HLD)](HLD.md) covers the architecture, design choices, and pipeline.
